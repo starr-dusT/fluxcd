@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-longhorn
+  namespace: longhorn-system
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "longhorn.vortex.lan"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: longhorn-frontend
+            port:
+              number: 80

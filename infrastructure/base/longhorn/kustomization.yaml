@@ -4,3 +4,4 @@ resources:
   - namespace.yaml
   - helmrelease-longhorn.yaml 
   - helmrepo-longhorn.yaml
+  - ingress-longhorn.yaml
