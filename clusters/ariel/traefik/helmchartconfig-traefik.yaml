@@ -9,6 +9,7 @@ spec:
     ports:
       lhp:
         port: 80
-        expose: true
+        expose: 
+          default: true
         exposedPort: 8812
         protocol: TCP
