@@ -1,0 +1,15 @@
+---
+kind: IngressRoute
+metadata:
+  name: ingress-longhorn
+  namespace: longhorn-system 
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`v1.lan`)
+      services:
+        - kind: Service
+          name: ingress-longhorn 
+          port: 80
