@@ -9,7 +9,7 @@ spec:
     - web
   routes:
     - kind: Rule
-      match: Host(`v1.lan`)
+      match: Host(`192.168.2.30`)
       services:
         - kind: Service
           name: longhorn-frontend
