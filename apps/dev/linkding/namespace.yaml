@@ -1,6 +1,7 @@
+---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: longhorn-system
+  name: linkding
   labels:
-    name: longhorn-system
+    name: linkding
