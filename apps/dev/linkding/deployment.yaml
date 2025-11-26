@@ -4,27 +4,25 @@ kind: Deployment
 metadata:
   name: linkding
   namespace: linkding
-  labels:
-    app: linkding
- spec:
-   replicas: 1
-   selector:
-     matchLabels:
-       app: linkding
-   metadata:
-     labels:
-       app: linkding
-   template:
-     strategy:
-     type: RollingUpdate
-     rollingUpdate:
-       maxUnavailable: 25%
-       maxSurge: 25%:
-     spec:
-       containers:
-         - image: sissbruecker/linkding:latest
-           name: linkding
-           ports:
-             - containerPort: 9090
-               protocol: TCP
-       restartPolicy: Always
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: linkding
+  template:
+    metadata:
+      labels:
+        app: linkding
+    spec:
+      containers:
+        - image: sissbruecker/linkding:latest
+          name: linkding
+          ports:
+            - containerPort: 9090
+              protocol: TCP
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%
