@@ -1,15 +1,15 @@
 ---
-apiVersion: helm.cattle.io/v1
-kind: HelmChartConfig
-metadata:
-  name: traefik
-  namespace: kube-system
-spec:
-  valuesContent: |-
-    ports:
-      lhp:
-        port: 9090
-        expose: 
-          default: true
-        exposedPort: 9090
-        protocol: TCP
+#apiVersion: helm.cattle.io/v1
+#kind: HelmChartConfig
+#metadata:
+#  name: traefik
+#  namespace: kube-system
+#spec:
+#  valuesContent: |-
+#    ports:
+#      lhp:
+#        port: 9090
+#        expose: 
+#          default: true
+#        exposedPort: 9090
+#        protocol: TCP
