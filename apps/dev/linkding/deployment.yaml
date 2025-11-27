@@ -20,6 +20,11 @@ spec:
           ports:
             - containerPort: 9090
               protocol: TCP
+          env:
+            - name: LD_SUPERUSER_NAME
+              value: "admin"
+            - name: LD_SUPERUSER_PASSWORD
+              value: "admin"
       restartPolicy: Always
     strategy:
       type: RollingUpdate
