@@ -25,6 +25,13 @@ spec:
               value: "admin"
             - name: LD_SUPERUSER_PASSWORD
               value: "admin"
+          volumeMounts:
+            - name: linkding-volume
+              mountPath: /etc/linkding/data
+      volumes:
+        - name: linkding-volume
+          persistentVolumeClaim:
+            claimName: linkding-pvc
       restartPolicy: Always
     strategy:
       type: RollingUpdate
