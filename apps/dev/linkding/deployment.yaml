@@ -3,7 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: linkding
-  namespace: linkding
 spec:
   replicas: 1
   selector:
@@ -20,11 +19,6 @@ spec:
           ports:
             - containerPort: 9090
               protocol: TCP
-          env:
-            - name: LD_SUPERUSER_NAME
-              value: "admin"
-            - name: LD_SUPERUSER_PASSWORD
-              value: "admin"
           volumeMounts:
             - name: linkding-volume
               mountPath: /etc/linkding/data
