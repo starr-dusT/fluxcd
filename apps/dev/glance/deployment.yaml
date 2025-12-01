@@ -22,15 +22,10 @@ spec:
           volumeMounts:
             - name: glance-config-volume
               mountPath: /app/config
-            - name: glance-assets-volume
-              mountPath: /app/assets
       volumes:
         - name: glance-config-volume
-          persistentVolumeClaim:
-            claimName: glance-config-pvc
-        - name: glance-assets-volume
-          persistentVolumeClaim:
-            claimName: glance-assets-pvc
+          configMap:
+            name: glance-config
       restartPolicy: Always
     strategy:
       type: RollingUpdate

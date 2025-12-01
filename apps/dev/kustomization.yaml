@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - ./glance
   - ./linkding
+  - ingress.yaml
