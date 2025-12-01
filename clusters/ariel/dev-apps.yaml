@@ -17,3 +17,7 @@ spec:
     kind: GitRepository
     name: flux-system
   targetNamespace: "apps-dev"
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age

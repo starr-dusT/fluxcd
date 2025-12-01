@@ -4,3 +4,4 @@ resources:
   - ./glance
   - ./linkding
   - ingress.yaml
+  - secrets.yaml
