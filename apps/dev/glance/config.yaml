@@ -6,10 +6,10 @@ metadata:
 data:
   glance.yml: |
     auth:
-      secret-key: ${TOKEN} 
+      secret-key: ${GLANCE_TOKEN} 
       users:
         tstarr:
-          password: ${PASSWORD}
+          password: ${GLANCE_PASSWORD}
     
     theme:
       # note: assets are cached by the browser, changes to the css file

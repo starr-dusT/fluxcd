@@ -22,6 +22,17 @@ spec:
           volumeMounts:
             - name: glance-config-volume
               mountPath: /app/config
+          env:
+            - name: GLANCE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: GLANCE_TOKEN
+            - name: GLANCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: GLANCE_PASSWORD
       volumes:
         - name: glance-config-volume
           configMap:
