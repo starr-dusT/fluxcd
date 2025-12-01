@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: glance
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: glance
+  template:
+    metadata:
+      labels:
+        app: glance
+    spec:
+      containers:
+        - image: glanceapp/glance:latest
+          name: glance
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: glance-config-volume
+              mountPath: /app/config
+            - name: glance-assets-volume
+              mountPath: /app/assets
+      volumes:
+        - name: glance-config-volume
+          persistentVolumeClaim:
+            claimName: glance-config-pvc
+        - name: glance-assets-volume
+          persistentVolumeClaim:
+            claimName: glance-assets-pvc
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%
