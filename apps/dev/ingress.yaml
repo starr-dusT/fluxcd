@@ -1,29 +1,19 @@
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
 metadata:
   name: glance-http
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
-  rules:
-    - host: glance.v1.lan
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: glance-service
-                port:
-                  number: 80
-    - host: link.v1.lan
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: linkding-service
-                port:
-                  number: 80
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`glance.v1.lan`) || Host(`glance.tstarr.us`)
+      kind: Rule
+      services:
+        - name: glance-service
+          port: 80
+
+    - match: Host(`link.v1.lan`) || Host(`link.tstarr.us`)
+      kind: Rule
+      services:
+        - name: linkding-service
+          port: 80

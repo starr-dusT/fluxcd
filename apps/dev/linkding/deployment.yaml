@@ -30,6 +30,8 @@ spec:
                 secretKeyRef:
                   name: sops-apps-dev
                   key: LINKDING_ADMIN_PASSWORD
+            - name: LD_CSRF_TRUSTED_ORIGINS
+              value: "https://link.tstarr.us"
       volumes:
         - name: linkding-volume
           persistentVolumeClaim:
