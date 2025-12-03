@@ -6,13 +6,13 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`glance.v1.lan`) || Host(`glance.tstarr.us`)
+    - match: Host(`glance.vortex-1.lan`) || Host(`glance.tstarr.us`)
       kind: Rule
       services:
         - name: glance-service
           port: 80
 
-    - match: Host(`link.v1.lan`) || Host(`link.tstarr.us`)
+    - match: Host(`link.vortex-1.lan`) || Host(`link.tstarr.us`)
       kind: Rule
       services:
         - name: linkding-service
