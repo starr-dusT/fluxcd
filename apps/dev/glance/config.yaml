@@ -80,15 +80,11 @@ data:
                 cache: 1m
                 title: Services
                 sites:
-                  - title: Portainer
-                    url: http://torus:9000
-                    check-url: http://portainer-portainer-1:9000
-                    icon: sh:portainer
-                  - title: Pihole
-                    url: http://torus:8001/admin/login.php
-                    check-url: https://glance.tstarr.us # pihole bypassed and pinging localhost
+                  - title: Adguard 
+                    url: http://69.69.1.10:3003
+                    check-url: https://69.69.1.10:3003
                     allow-insecure: true
-                    icon: sh:pi-hole
+                    icon: sh:adguard
                   - title: Home Assistant
                     url: https://home.tstarr.us
                     icon: sh:home-assistant
@@ -117,9 +113,6 @@ data:
                   - title: Navidrome
                     url: https://music.tstarr.us
                     icon: sh:navidrome
-                  - title: Miniflux
-                    url: https://rss.tstarr.us
-                    icon: sh:miniflux
                   - title: 2FAuth
                     url: https://2fa.tstarr.us
                     icon: sh:2fauth
