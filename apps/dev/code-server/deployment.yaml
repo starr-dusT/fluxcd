@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: code-server
+  template:
+    metadata:
+      labels:
+        app: code-server
+    spec:
+      containers:
+        - image: lscr.io/linuxserver/code-server:latest
+          name: code-server
+          ports:
+            - containerPort: 8443
+              protocol: TCP
+          volumeMounts:
+            - name: code-server-volume
+              mountPath: /config
+          env:
+            - name: PUID 
+              value: "1000"
+            - name: PGID 
+              value: "1000"
+            - name: TZ 
+              value: "America/Los_Angeles"
+      volumes:
+        - name: code-server-volume
+          persistentVolumeClaim:
+            claimName: code-server-pvc
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
