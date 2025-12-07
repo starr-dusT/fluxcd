@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remmina
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: remmina
+  template:
+    metadata:
+      labels:
+        app: remmina
+    spec:
+      containers:
+        - image: lscr.io/linuxserver/remmina:latest
+          name: remmina
+          ports:
+            - containerPort: 3000 
+              protocol: TCP
+          volumeMounts:
+            - name: remmina-volume
+              mountPath: /config
+          env:
+            - name: PUID 
+              value: "1000"
+            - name: PGID 
+              value: "1000"
+            - name: TZ 
+              value: "America/Los_Angeles"
+      volumes:
+        - name: remmina-volume
+          persistentVolumeClaim:
+            claimName: remmina-pvc
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%

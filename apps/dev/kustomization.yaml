@@ -4,5 +4,6 @@ resources:
   - ./cloudflare-ddns
   - ./glance
   - ./linkding
+  - ./remmina
   - ingress.yaml
   - secrets.yaml
