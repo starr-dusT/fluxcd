@@ -82,9 +82,9 @@ data:
                 sites:
                   - title: Adguard 
                     url: http://69.69.1.10:3003
-                    check-url: https://69.69.1.10:3003
+                    check-url: https://glance.tstarr.us
                     allow-insecure: true
-                    icon: sh:adguard
+                    icon: sh:adguard-home
                   - title: Home Assistant
                     url: https://home.tstarr.us
                     icon: sh:home-assistant
@@ -94,14 +94,9 @@ data:
                   - title: Linkding
                     url: https://link.tstarr.us
                     icon: sh:linkding
-                  - title: OpenVSCode_A
-                    url: https://codea.tstarr.us
-                    icon: sh:vscodium
-                    alt-status-codes:
-                      - 403
-                  - title: OpenVSCode_B
-                    url: https://codeb.tstarr.us
-                    icon: sh:vscodium
+                  - title: Code Server
+                    url: https://code.tstarr.us
+                    icon: sh:visual-studio-code
                     alt-status-codes:
                       - 403
                   - title: Nextcloud
@@ -110,9 +105,6 @@ data:
                   - title: Jellyfin
                     url: https://media.tstarr.us
                     icon: sh:jellyfin
-                  - title: Navidrome
-                    url: https://music.tstarr.us
-                    icon: sh:navidrome
                   - title: 2FAuth
                     url: https://2fa.tstarr.us
                     icon: sh:2fauth
