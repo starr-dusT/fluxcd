@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
 - repo.yaml
 - release.yaml
-  
+- storage-class.yaml
