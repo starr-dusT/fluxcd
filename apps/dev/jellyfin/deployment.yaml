@@ -13,6 +13,8 @@ spec:
       labels:
         app: jellyfin
     spec:
+      securityContext:
+        fsGroup: 104
       containers:
         - image: jellyfin/jellyfin:latest
           name: jellyfin
@@ -26,9 +28,13 @@ spec:
               mountPath: /config
             - name: jellyfin-cache-volume
               mountPath: /cache
+            - name: jellyfin-gpu-volume
+              mountPath: /dev/dri
           env:
             - name: JELLYFIN_PublishedServerUrl 
               value: "https://media.tstarr.us"
+          securityContext:
+            privileged: true
       volumes:
         - name: jellyfin-media-volume
           persistentVolumeClaim:
@@ -39,6 +45,9 @@ spec:
         - name: jellyfin-cache-volume
           persistentVolumeClaim:
             claimName: jellyfin-cache-pvc
+        - name: jellyfin-gpu-volume
+          hostPath:
+            path: /dev/dri
       restartPolicy: Always
     strategy:
       type: RollingUpdate
