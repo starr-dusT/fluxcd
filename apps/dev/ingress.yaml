@@ -29,3 +29,9 @@ spec:
       services:
         - name: code-server-service
           port: 80
+
+    - match: Host(`media.vortex-1.lan`) || Host(`media.tstarr.us`)
+      kind: Rule
+      services:
+        - name: jellyfin-service
+          port: 80

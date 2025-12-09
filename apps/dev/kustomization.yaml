@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ./cloudflare-ddns
   - ./code-server
+  - ./jellyfin
   - ./glance
   - ./linkding
   - ./remmina

@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jellyfin
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      containers:
+        - image: jellyfin/jellyfin:latest
+          name: jellyfin
+          ports:
+            - containerPort: 8096
+              protocol: TCP
+          volumeMounts:
+            - name: jellyfin-media-volume
+              mountPath: /engi
+            - name: jellyfin-config-volume
+              mountPath: /config
+            - name: jellyfin-cache-volume
+              mountPath: /cache
+          env:
+            - name: JELLYFIN_PublishedServerUrl 
+              value: "https://media.tstarr.us"
+      volumes:
+        - name: jellyfin-media-volume
+          persistentVolumeClaim:
+            claimName: jellyfin-smb-pvc
+        - name: jellyfin-config-volume
+          persistentVolumeClaim:
+            claimName: jellyfin-config-pvc
+        - name: jellyfin-cache-volume
+          persistentVolumeClaim:
+            claimName: jellyfin-cache-pvc
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
