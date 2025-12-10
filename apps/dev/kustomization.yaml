@@ -4,6 +4,7 @@ resources:
   - ./cloudflare-ddns
   - ./code-server
   - ./jellyfin
+  - ./gitea
   - ./glance
   - ./linkding
   - ./remmina

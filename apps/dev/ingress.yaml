@@ -41,3 +41,9 @@ spec:
       services:
         - name: twof-auth-service
           port: 80
+
+    - match: Host(`git.vortex-1.lan`) || Host(`git.tstarr.us`)
+      kind: Rule
+      services:
+        - name: gitea-service
+          port: 80

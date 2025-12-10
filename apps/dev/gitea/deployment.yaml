@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitea
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitea
+  template:
+    metadata:
+      labels:
+        app: gitea
+    spec:
+      containers:
+        - image: docker.gitea.com/gitea:latest
+          name: gitea
+          ports:
+            - containerPort: 3000 
+              protocol: TCP
+          volumeMounts:
+            - name: gitea-volume
+              mountPath: /data
+          env:
+            - name: USER_UID 
+              value: "1000"
+            - name: USER_GID 
+              value: "1000"
+      volumes:
+        - name: gitea-volume
+          persistentVolumeClaim:
+            claimName: gitea-pvc
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%
