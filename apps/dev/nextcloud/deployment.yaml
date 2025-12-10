@@ -1,0 +1,99 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextcloud-db
+  template:
+    metadata:
+      labels:
+        app: nextcloud-db
+    spec:
+      containers:
+        - image: mariadb:10.6
+          name: nextcloud-db
+          ports:
+            - containerPort: 3306 
+              protocol: TCP
+          args:
+            - --transaction-isolation=READ-COMMITTED
+            - --binlog-format=ROW
+            - --max-connections=1000
+          volumeMounts:
+            - name: nextcloud-db-volume
+              mountPath: /var/lib/mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: NEXTCLOUD_DB_ROOT_PASSWORD 
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: NEXTCLOUD_DB_PASSWORD
+            - name: MYSQL_DATABASE
+              value: "nextcloud"
+            - name: MYSQL_USER
+              value: "nextcloud"
+      volumes:
+        - name: nextcloud-db-volume
+          persistentVolumeClaim:
+            claimName: nextcloud-db-pvc
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextcloud
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+    spec:
+      containers:
+        - image: nextcloud:latest
+          name: nextcloud
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: nextcloud-volume
+              mountPath: /var/www/html
+          env:
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: NEXTCLOUD_DB_PASSWORD
+            - name: MYSQL_DATABASE
+              value: "nextcloud"
+            - name: MYSQL_USER
+              value: "nextcloud"
+            - name: MYSQL_HOST
+              value: "nextcloud-db-service"
+      volumes:
+        - name: nextcloud-volume
+          persistentVolumeClaim:
+            claimName: nextcloud-pvc
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%
