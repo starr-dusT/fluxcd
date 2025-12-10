@@ -7,5 +7,6 @@ resources:
   - ./glance
   - ./linkding
   - ./remmina
+  - ./twof-auth
   - ingress.yaml
   - secrets.yaml
