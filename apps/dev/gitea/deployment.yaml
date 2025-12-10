@@ -27,6 +27,8 @@ spec:
               value: "1000"
             - name: USER_GID 
               value: "1000"
+            - name: GITEA__service__DISABLE_REGISTRATION
+              value: "true"
       volumes:
         - name: gitea-volume
           persistentVolumeClaim:
