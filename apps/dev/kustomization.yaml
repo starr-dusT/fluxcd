@@ -7,6 +7,7 @@ resources:
   - ./gitea
   - ./glance
   - ./linkding
+  - ./mattermost
   - ./nextcloud
   - ./remmina
   - ./twof-auth

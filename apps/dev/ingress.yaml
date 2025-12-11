@@ -53,3 +53,9 @@ spec:
       services:
         - name: nextcloud-service
           port: 80
+
+    - match: Host(`lc.vortex-1.lan`) || Host(`lc.tstarr.us`)
+      kind: Rule
+      services:
+        - name: mattermost-service
+          port: 80
