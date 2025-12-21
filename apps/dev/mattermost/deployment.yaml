@@ -72,12 +72,6 @@ spec:
               mountPath: /mattermost/data
             - name: mattermost-logs-volume
               mountPath: /mattermost/logs
-            - name: mattermost-plugins-volume
-              mountPath: /mattermost/plugins
-            - name: mattermost-client-plugins-volume
-              mountPath: /mattermost/client/plugins
-            - name: mattermost-bleve-volume
-              mountPath: /mattermost/bleve-indexes
           env:
             - name: TZ 
               value: "America/Los_Angeles"
@@ -102,15 +96,6 @@ spec:
         - name: mattermost-logs-volume
           persistentVolumeClaim:
             claimName: mattermost-logs-pvc
-        - name: mattermost-plugins-volume
-          persistentVolumeClaim:
-            claimName: mattermost-plugins-pvc
-        - name: mattermost-client-plugins-volume
-          persistentVolumeClaim:
-            claimName: mattermost-client-plugins-pvc
-        - name: mattermost-bleve-volume
-          persistentVolumeClaim:
-            claimName: mattermost-bleve-pvc
       restartPolicy: Always
     strategy:
       type: RollingUpdate
