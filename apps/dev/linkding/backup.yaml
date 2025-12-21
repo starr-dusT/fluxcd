@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: gitea-backup
+  name: linkding-backup
 spec:
   # Every day at 0200
   schedule: "10 11 * * *"
@@ -20,11 +20,11 @@ spec:
                 - name: TZ
                   value: "America/Los_Angeles"
                 - name: BORG_REPO
-                  value: "tstarr@69.69.1.14:/engi/store/vortex/gitea.borg"
+                  value: "tstarr@69.69.1.14:/engi/store/vortex/linkding.borg"
                 - name: BORG_RSH
                   value: "ssh -o StrictHostKeyChecking=no -oBatchMode=yes -i /secrets/torus_ssh_key"
                 - name: ARCHIVE
-                  value: "gitea-{now}"
+                  value: "linkding-{now}"
                 - name: BORG_PASSPHRASE
                   valueFrom:
                     secretKeyRef:
@@ -36,7 +36,7 @@ spec:
                 - name: borg-secrets-volume
                   readOnly: true
                   mountPath: /secrets
-                - name: gitea-backup-volume
+                - name: linkding-backup-volume
                   readOnly: true
                   mountPath: /data
           volumes:
@@ -47,6 +47,6 @@ spec:
                 items:
                   - key: TORUS_SSH_KEY
                     path: torus_ssh_key
-            - name: gitea-backup-volume
+            - name: linkding-backup-volume
               persistentVolumeClaim:
-                claimName: gitea-pvc
+                claimName: linkding-pvc
