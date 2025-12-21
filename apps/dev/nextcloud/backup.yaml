@@ -5,7 +5,7 @@ metadata:
   name: nextcloud-backup
 spec:
   # Every day at 0200
-  schedule: "55 12 * * *"
+  schedule: "00 13 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
@@ -57,7 +57,7 @@ metadata:
   name: nextcloud-db-backup
 spec:
   # Every day at 0200
-  schedule: "55 12 * * *"
+  schedule: "00 13 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
