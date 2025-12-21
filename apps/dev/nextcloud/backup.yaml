@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: mattermost-backup
+  name: nextcloud-backup
 spec:
   # Every day at 0200
   schedule: "55 12 * * *"
@@ -20,11 +20,11 @@ spec:
                 - name: TZ
                   value: "America/Los_Angeles"
                 - name: BORG_REPO
-                  value: "tstarr@69.69.1.14:/engi/store/vortex/mattermost.borg"
+                  value: "tstarr@69.69.1.14:/engi/store/vortex/nextcloud.borg"
                 - name: BORG_RSH
                   value: "ssh -o StrictHostKeyChecking=no -oBatchMode=yes -i /secrets/torus_ssh_key"
                 - name: ARCHIVE
-                  value: "mattermost-{now}"
+                  value: "nextcloud-{now}"
                 - name: BORG_PASSPHRASE
                   valueFrom:
                     secretKeyRef:
@@ -36,71 +36,7 @@ spec:
                 - name: borg-secrets-volume
                   readOnly: true
                   mountPath: /secrets
-                - name: mattermost-config-volume
-                  readOnly: true
-                  mountPath: /data/config
-                - name: mattermost-data-volume
-                  readOnly: true
-                  mountPath: /data/data
-                - name: mattermost-logs-volume
-                  readOnly: true
-                  mountPath: /data/logs
-          volumes:
-            - name: borg-secrets-volume
-              secret:
-                secretName: sops-apps-dev
-                defaultMode: 0400
-                items:
-                  - key: TORUS_SSH_KEY
-                    path: torus_ssh_key
-            - name: mattermost-config-volume
-              persistentVolumeClaim:
-                claimName: mattermost-config-pvc
-            - name: mattermost-data-volume
-              persistentVolumeClaim:
-                claimName: mattermost-data-pvc
-            - name: mattermost-logs-volume
-              persistentVolumeClaim:
-                claimName: mattermost-logs-pvc
----
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: mattermost-db-backup
-spec:
-  # Every day at 0200
-  schedule: "55 12 * * *"
-  successfulJobsHistoryLimit: 1
-  failedJobsHistoryLimit: 1
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          restartPolicy: Never
-          containers:
-            - name: borg 
-              image: pschiffe/borg:latest
-              env:
-                - name: TZ
-                  value: "America/Los_Angeles"
-                - name: BORG_REPO
-                  value: "tstarr@69.69.1.14:/engi/store/vortex/mattermost-db.borg"
-                - name: BORG_RSH
-                  value: "ssh -o StrictHostKeyChecking=no -oBatchMode=yes -i /secrets/torus_ssh_key"
-                - name: ARCHIVE
-                  value: "mattermost-db-{now}"
-                - name: BORG_PASSPHRASE
-                  valueFrom:
-                    secretKeyRef:
-                      name: sops-apps-dev
-                      key: VORTEX_BORG_PASSPHRASE
-                - name: BACKUP_DIRS
-                  value: "/data"
-              volumeMounts:
-                - name: borg-secrets-volume
-                  readOnly: true
-                  mountPath: /secrets
-                - name: mattermost-db-volume
+                - name: nextcloud-volume
                   readOnly: true
                   mountPath: /data
           volumes:
@@ -111,6 +47,58 @@ spec:
                 items:
                   - key: TORUS_SSH_KEY
                     path: torus_ssh_key
-            - name: mattermost-db-volume
+            - name: nextcloud-volume
               persistentVolumeClaim:
-                claimName: mattermost-db-pvc
+                claimName: nextcloud-pvc
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: nextcloud-db-backup
+spec:
+  # Every day at 0200
+  schedule: "55 12 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: borg 
+              image: pschiffe/borg:latest
+              env:
+                - name: TZ
+                  value: "America/Los_Angeles"
+                - name: BORG_REPO
+                  value: "tstarr@69.69.1.14:/engi/store/vortex/nextcloud-db.borg"
+                - name: BORG_RSH
+                  value: "ssh -o StrictHostKeyChecking=no -oBatchMode=yes -i /secrets/torus_ssh_key"
+                - name: ARCHIVE
+                  value: "nextcloud-db-{now}"
+                - name: BORG_PASSPHRASE
+                  valueFrom:
+                    secretKeyRef:
+                      name: sops-apps-dev
+                      key: VORTEX_BORG_PASSPHRASE
+                - name: BACKUP_DIRS
+                  value: "/data"
+              volumeMounts:
+                - name: borg-secrets-volume
+                  readOnly: true
+                  mountPath: /secrets
+                - name: nextcloud-db-volume
+                  readOnly: true
+                  mountPath: /data
+          volumes:
+            - name: borg-secrets-volume
+              secret:
+                secretName: sops-apps-dev
+                defaultMode: 0400
+                items:
+                  - key: TORUS_SSH_KEY
+                    path: torus_ssh_key
+            - name: nextcloud-db-volume
+              persistentVolumeClaim:
+                claimName: nextcloud-db-pvc
