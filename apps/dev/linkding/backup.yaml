@@ -5,7 +5,7 @@ metadata:
   name: linkding-backup
 spec:
   # Every day at 0200
-  schedule: "10 11 * * *"
+  schedule: "30 12 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
@@ -36,7 +36,7 @@ spec:
                 - name: borg-secrets-volume
                   readOnly: true
                   mountPath: /secrets
-                - name: linkding-backup-volume
+                - name: linkding-volume
                   readOnly: true
                   mountPath: /data
           volumes:
@@ -47,6 +47,6 @@ spec:
                 items:
                   - key: TORUS_SSH_KEY
                     path: torus_ssh_key
-            - name: linkding-backup-volume
+            - name: linkding-volume
               persistentVolumeClaim:
                 claimName: linkding-pvc
