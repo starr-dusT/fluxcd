@@ -37,10 +37,6 @@ data:
                 units: imperial 
                 hour-format: 24h
                 location: Tehachapi, United States
-              - type: server-stats
-                servers:
-                  - type: local
-                    name: Torus 
               
           - size: full
             widgets:
