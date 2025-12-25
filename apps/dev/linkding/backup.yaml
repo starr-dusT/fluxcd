@@ -5,7 +5,7 @@ metadata:
   name: linkding-backup
 spec:
   # Every day at 0200
-  schedule: "10 12 * * *"
+  schedule: "0 2 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
