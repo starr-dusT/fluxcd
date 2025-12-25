@@ -81,10 +81,15 @@ data:
                 title: Services
                 sites:
                   - title: Adguard 
-                    url: http://69.69.1.10:3003
+                    url: http://tetragon.lan:3003
                     check-url: https://glance.tstarr.us
                     allow-insecure: true
                     icon: sh:adguard-home
+                  - title: Grafana 
+                    url: http://tetragon.lan:2342
+                    check-url: https://glance.tstarr.us
+                    allow-insecure: true
+                    icon: sh:grafana
                   - title: Home Assistant
                     url: https://home.tstarr.us
                     icon: sh:home-assistant
