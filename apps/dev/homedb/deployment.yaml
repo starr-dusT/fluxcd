@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homedb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homedb
+  template:
+    metadata:
+      labels:
+        app: homedb
+    spec:
+      containers:
+        - image: postgres:16
+          name: homedb
+          ports:
+            - containerPort: 5432 
+              protocol: TCP
+          volumeMounts:
+            - name: homedb-volume
+              mountPath: /var/lib/postgresql/data
+          env:
+            - name: POSTGRES_USER 
+              value: "tstarr"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: HOMEDB_POSTGRES_PASSWORD
+            - name: POSTGRES_DB 
+              value: "homedb"
+      volumes:
+        - name: homedb-volume
+          persistentVolumeClaim:
+            claimName: homedb-pvc
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%

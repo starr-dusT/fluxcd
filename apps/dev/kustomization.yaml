@@ -6,6 +6,7 @@ resources:
   - ./jellyfin
   - ./gitea
   - ./glance
+  - ./homedb
   - ./linkding
   - ./mattermost
   - ./nextcloud
