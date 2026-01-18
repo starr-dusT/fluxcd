@@ -1,0 +1,54 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: linkding-rsync-backup
+spec:
+  # Every day at 0200
+  schedule: "16 18 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: borg 
+              image: pschiffe/borg:latest
+              env:
+                - name: TZ
+                  value: "America/Los_Angeles"
+                - name: BORG_REMOTE_PATH
+                  value: "borg1"
+                - name: BORG_REPO
+                  value: "fm2120@fm2120.rsync.net:/data1/home/fm2120/store/vortex/linkding.borg"
+                - name: BORG_RSH
+                  value: "ssh -o StrictHostKeyChecking=no -oBatchMode=yes -i /secrets/rsync_ssh_key"
+                - name: ARCHIVE
+                  value: "linkding-{now}"
+                - name: BORG_PASSPHRASE
+                  valueFrom:
+                    secretKeyRef:
+                      name: sops-apps-dev
+                      key: VORTEX_BORG_PASSPHRASE
+                - name: BACKUP_DIRS
+                  value: "/data"
+              volumeMounts:
+                - name: borg-secrets-volume
+                  readOnly: true
+                  mountPath: /secrets
+                - name: linkding-volume
+                  readOnly: true
+                  mountPath: /data
+          volumes:
+            - name: borg-secrets-volume
+              secret:
+                secretName: sops-apps-dev
+                defaultMode: 0400
+                items:
+                  - key: RSYNC_SSH_KEY
+                    path: rsync_ssh_key
+            - name: linkding-volume
+              persistentVolumeClaim:
+                claimName: linkding-pvc
