@@ -7,10 +7,11 @@ spec:
   selector:
     app: nextcloud-db
   ports:
-    - protocol: TCP
+    - name: nextcloud-db
       port: 3306 
       targetPort: 3306
-  type: ClusterIP
+      nodePort: 30306
+  type: NodePort 
 ---
 apiVersion: v1
 kind: Service

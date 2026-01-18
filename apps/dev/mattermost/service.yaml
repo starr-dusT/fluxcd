@@ -7,10 +7,11 @@ spec:
   selector:
     app: mattermost-db
   ports:
-    - protocol: TCP
+    - name: mattermost-db
       port: 5432 
       targetPort: 5432
-  type: ClusterIP
+      nodePort: 30433
+  type: NodePort 
 ---
 apiVersion: v1
 kind: Service
