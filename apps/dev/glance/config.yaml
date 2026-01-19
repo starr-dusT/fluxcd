@@ -86,6 +86,11 @@ data:
                     check-url: https://glance.tstarr.us
                     allow-insecure: true
                     icon: sh:grafana
+                  - title: Databasus 
+                    url: http://torus.lan:4005
+                    check-url: https://glance.tstarr.us
+                    allow-insecure: true
+                    icon: sh:databasus
                   - title: Home Assistant
                     url: https://home.tstarr.us
                     icon: sh:home-assistant
