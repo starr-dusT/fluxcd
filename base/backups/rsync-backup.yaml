@@ -2,10 +2,10 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: torus-backup
+  name: rsync-backup
 spec:
   # Every day at 0200
-  schedule: "13 00 * * *"
+  schedule: "01 01 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
@@ -19,10 +19,12 @@ spec:
               env:
                 - name: TZ
                   value: "America/Los_Angeles"
+                - name: BORG_REMOTE_PATH
+                  value: "borg1"
                 - name: BORG_REPO
                   value: "user@host:/path/app.borg"
                 - name: BORG_RSH
-                  value: "ssh -o StrictHostKeyChecking=no -oBatchMode=yes -i /secrets/torus_ssh_key"
+                  value: "ssh -o StrictHostKeyChecking=no -oBatchMode=yes -i /secrets/rsync_ssh_key"
                 - name: ARCHIVE
                   value: "app-{now:%Y-%m-%d-%H%M%S}"
                 - name: BORG_PASSPHRASE
@@ -45,8 +47,8 @@ spec:
                 secretName: sops-apps-dev
                 defaultMode: 0400
                 items:
-                  - key: TORUS_SSH_KEY
-                    path: torus_ssh_key
+                  - key: RSYNC_SSH_KEY
+                    path: rsync_ssh_key
             - name: app-volume
               persistentVolumeClaim:
                 claimName: app-pvc

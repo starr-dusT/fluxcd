@@ -3,9 +3,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namePrefix: linkding-
 resources:
-- ../../../../base
+- ../../../../base/backups
 patches:
-  - path: patch.yaml
+  - path: rsync-patch.yaml
+    target:
+      kind: CronJob
+      name: rsync-backup
+  - path: torus-patch.yaml
     target:
       kind: CronJob
       name: torus-backup

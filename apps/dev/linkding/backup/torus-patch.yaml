@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: linkding-backup
+  name: torus-backup
 spec:
   jobTemplate:
     spec:

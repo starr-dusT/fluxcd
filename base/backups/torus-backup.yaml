@@ -2,10 +2,10 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: linkding-rsync-backup
+  name: torus-backup
 spec:
   # Every day at 0200
-  schedule: "16 18 * * *"
+  schedule: "01 01 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
@@ -19,14 +19,12 @@ spec:
               env:
                 - name: TZ
                   value: "America/Los_Angeles"
-                - name: BORG_REMOTE_PATH
-                  value: "borg1"
                 - name: BORG_REPO
-                  value: "fm2120@fm2120.rsync.net:/data1/home/fm2120/store/vortex/linkding.borg"
+                  value: "user@host:/path/app.borg"
                 - name: BORG_RSH
-                  value: "ssh -o StrictHostKeyChecking=no -oBatchMode=yes -i /secrets/rsync_ssh_key"
+                  value: "ssh -o StrictHostKeyChecking=no -oBatchMode=yes -i /secrets/torus_ssh_key"
                 - name: ARCHIVE
-                  value: "linkding-{now}"
+                  value: "app-{now:%Y-%m-%d-%H%M%S}"
                 - name: BORG_PASSPHRASE
                   valueFrom:
                     secretKeyRef:
@@ -38,7 +36,7 @@ spec:
                 - name: borg-secrets-volume
                   readOnly: true
                   mountPath: /secrets
-                - name: linkding-volume
+                - name: app-volume
                   readOnly: true
                   mountPath: /data
           volumes:
@@ -47,8 +45,8 @@ spec:
                 secretName: sops-apps-dev
                 defaultMode: 0400
                 items:
-                  - key: RSYNC_SSH_KEY
-                    path: rsync_ssh_key
-            - name: linkding-volume
+                  - key: TORUS_SSH_KEY
+                    path: torus_ssh_key
+            - name: app-volume
               persistentVolumeClaim:
-                claimName: linkding-pvc
+                claimName: app-pvc
