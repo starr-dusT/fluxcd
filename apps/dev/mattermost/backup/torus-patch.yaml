@@ -14,24 +14,20 @@ spec:
                 - name: BORG_REPO
                   value: "tstarr@69.69.1.14:/engi/store/vortex/mattermost.borg"
                 - name: ARCHIVE
-                  value: "mattermost-{now:%Y-%m-%d-%H%M%S}"
+                  value: "mattermost-data-{now:%Y-%m-%d-%H%M%S}"
+                - name: BACKUP_DIRS
+                  value: "/data-data /data-config"
               volumeMounts:
                 - name: app-volume
                   readOnly: true
-                  mountPath: /mattermost/config
+                  mountPath: /data-data
                 - name: app-volume-2
-                  readonly: true
-                  mountPath: /mattermost/data
-                - name: app-volume-3
                   readOnly: true
-                  mountPath: /mattermost/logs
+                  mountPath: /data-config
           volumes:
             - name: app-volume
               persistentVolumeClaim:
-                claimName: mattermost-config-pvc
-            - name: app-volume-2 
-              persistentVolumeClaim:
                 claimName: mattermost-data-pvc
-            - name: app-volume-3
+            - name: app-volume-2
               persistentVolumeClaim:
-                claimName: mattermost-logs-pvc
+                claimName: mattermost-config-pvc

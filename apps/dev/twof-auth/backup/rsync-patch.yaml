@@ -1,0 +1,21 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: rsync-backup
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: borg
+              env:
+                - name: BORG_REPO
+                  value: "fm2120@fm2120.rsync.net:/data1/home/fm2120/store/vortex/twof-auth.borg"
+                - name: ARCHIVE
+                  value: "twof-auth-{now:%Y-%m-%d-%H%M%S}"
+          volumes:
+            - name: app-volume
+              persistentVolumeClaim:
+                claimName: twof-auth-pvc
