@@ -1,0 +1,21 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: linkding-backup
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: borg
+              env:
+                - name: BORG_REPO
+                  value: "tstarr@69.69.1.14:/engi/store/vortex/linkding.borg"
+                - name: ARCHIVE
+                  value: "linkding-{now:%Y-%m-%d-%H%M%S}"
+          volumes:
+            - name: app-volume
+              persistentVolumeClaim:
+                claimName: linkding-pvc
