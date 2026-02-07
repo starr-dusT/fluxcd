@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rss-bridge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rss-bridge
+  template:
+    metadata:
+      labels:
+        app: rss-bridge
+    spec:
+      containers:
+        - image: rssbridge/rss-bridge:latest
+          name: rss-bridge
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%
