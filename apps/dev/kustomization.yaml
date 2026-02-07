@@ -9,6 +9,7 @@ resources:
   - ./homedb
   - ./linkding
   - ./mattermost
+  - ./miniflux
   - ./nextcloud
   - ./remmina
   - ./rss-bridge
