@@ -73,7 +73,7 @@ data:
                       - title: Cloudflare Dashboard
                         url: https://dash.cloudflare.com/
               - type: monitor
-                cache: 1m
+                cache: 10m
                 title: Services
                 sites:
                   - title: Adguard 
@@ -120,6 +120,12 @@ data:
                   - title: Remmina  
                     url: https://rdp.tstarr.us
                     icon: sh:remmina
+                  - title: RSSBridge 
+                    url: http://rss-bridge.vortex-1.lan
+                    icon: sh:rss-bridge
+                  - title: Miniflux 
+                    url: http://rss.tstarr.us
+                    icon: sh:miniflux
       
           - size: small
             widgets:
