@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rocketlaunch-bridge
+data:
+  RocketLaunchBridge.php: |
+    <?php
+
+    class RocketLaunchBridge extends BridgeAbstract
+    {
+        const NAME = 'Rocket Launch Live';
+        const URI = 'https://rocketlaunch.live/';
+        const DESCRIPTION = 'Converts RocketLaunch.live JSON launch data into an RSS feed';
+        const MAINTAINER = 'starr-dusT';
+
+        const PARAMETERS = [
+            'Global' => [
+                'url' => [
+                    'name' => 'JSON API URL',
+                    'type' => 'text',
+                    'default' => 'https://rocketlaunch.live/json/launches/next/5',
+                    'required' => true
+                ]
+            ]
+        ];
+
+        public function collectData()
+        {
+            $url = $this->getInput('url');
+
+            $json = getContents($url);
+            if ($json === false) {
+                returnServerError('Failed to fetch JSON');
+            }
+
+            $data = json_decode($json, true);
+            if (!isset($data['result'])) {
+                returnServerError('Invalid JSON structure');
+            }
+
+            foreach ($data['result'] as $launch) {
+                $item = [];
+
+                $provider = $launch['provider']['name'] ?? 'Unknown provider';
+                $vehicle  = $launch['vehicle']['name'] ?? 'Unknown vehicle';
+                $name     = $launch['name'] ?? 'Unnamed mission';
+
+                $item['title'] = sprintf(
+                    '%s – %s (%s)',
+                    $provider,
+                    $name,
+                    $vehicle
+                );
+
+                $descriptionParts = [];
+
+                if (!empty($launch['mission_description'])) {
+                    $descriptionParts[] = $launch['mission_description'];
+                }
+
+                if (!empty($launch['launch_description'])) {
+                    $descriptionParts[] = $launch['launch_description'];
+                }
+
+                if (!empty($launch['pad']['name'])) {
+                    $location = $launch['pad']['location']['name'] ?? '';
+                    $country  = $launch['pad']['location']['country'] ?? '';
+                    $descriptionParts[] = 'Launch site: ' . $launch['pad']['name'] .
+                        ($location || $country ? " ($location, $country)" : '');
+                }
+
+                $item['content'] = implode('<br><br>', $descriptionParts);
+
+                if (!empty($launch['t0'])) {
+                    $item['timestamp'] = strtotime($launch['t0']);
+                }
+
+                if (!empty($launch['slug'])) {
+                    $item['uri'] = 'https://rocketlaunch.live/launch/' . $launch['slug'];
+                } else {
+                    $item['uri'] = self::URI;
+                }
+
+                $this->items[] = $item;
+            }
+        }
+    }

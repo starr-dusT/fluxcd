@@ -19,9 +19,19 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
+          volumeMounts:
+            - mountPath: /app/bridges/RocketLaunchBridge.php
+              name: rocketlaunch-bridge-volume 
+              subPath: RocketLaunchBridge.php
+      volumes:
+        - configMap:
+            name: rocketlaunch-bridge 
+          name: rocketlaunch-bridge-volume 
       restartPolicy: Always
     strategy:
       type: RollingUpdate
       rollingUpdate:
         maxUnavailable: 25%
         maxSurge: 25%
+
+
