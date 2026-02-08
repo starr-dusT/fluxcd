@@ -1,0 +1,12 @@
+auth:
+  secret-key: ${GLANCE_TOKEN} 
+  users:
+    tstarr:
+      password: ${GLANCE_PASSWORD}
+
+theme:
+  custom-css-file: /assets/user.css
+
+pages:
+  - $include: home.yml
+  - $include: lab.yml

@@ -3,4 +3,10 @@ kind: Kustomization
 resources:
 - deployment.yaml
 - service.yaml
-- config.yaml
+
+configMapGenerator:
+- name: glance-config 
+  files:
+    - config/glance.yml
+    - config/home.yml
+    - config/lab.yml
