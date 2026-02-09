@@ -64,6 +64,10 @@ spec:
             - containerPort: 8080
               protocol: TCP
           env:
+            - name: LOG_LEVEL 
+              value: "debug" 
+            - name: POLLING_FREQUENCY 
+              value: "5" 
             - name: RUN_MIGRATIONS
               value: "1"
             - name: CREATE_ADMIN
