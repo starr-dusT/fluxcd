@@ -1,38 +1,27 @@
 - name: Lab 
   width: default 
-  hide-desktop-navigation: true
   center-vertically: true
   columns:
+    - size: small
+      widgets:
+        - type: clock
+          hour-format: 24h
+          timezones:
+            - timezone: Asia/Shanghai
+              label: Beijing
+            - timezone: Europe/Moscow
+              label: Moscow
+            - timezone: Asia/Tehran
+              label: Tehran
+        - type: weather
+          units: imperial 
+          hour-format: 24h
+          location: Tehachapi, United States
+        
     - size: full
       widgets:
         - type: bookmarks
           groups:
-            - title: General
-              links:
-                - title: Google
-                  url: https://google.com
-                - title: Gmail
-                  url: https://mail.google.com/mail/u/0/
-                - title: Amazon
-                  url: https://www.amazon.com/
-                - title: Github
-                  url: https://github.com/
-            - title: Entertainment
-              links:
-                - title: YouTube
-                  url: https://www.youtube.com/feed/subscriptions
-                - title: MLB.TV
-                  url: https://www.mlb.com/live-stream-games
-                - title: DIRECTV
-                  url: https://stream.directv.com/watchnow
-                - title: Miniflux 
-                  url:  https://rss.tstarr.us
-            - title: Social
-              links:
-                - title: LC Mattermost
-                  url: https://lc.tstarr.us/
-                - title: Instagram - Messages
-                  url:  https://www.instagram.com/direct/inbox/
             - title: Homelab 
               links:
                 - title: Cloudflare Dashboard
@@ -56,38 +45,28 @@
               check-url: https://glance.tstarr.us
               allow-insecure: true
               icon: sh:databasus
-            - title: Home Assistant
-              url: https://home.tstarr.us
-              icon: sh:home-assistant
-            - title: Gitea
-              url: https://git.tstarr.us
-              icon: sh:gitea
-            - title: Linkding
-              url: https://link.tstarr.us
-              icon: sh:linkding
             - title: Code Server
               url: https://code.tstarr.us
               icon: sh:visual-studio-code
               alt-status-codes:
                 - 403
-            - title: Nextcloud
-              url: https://cloud.tstarr.us
-              icon: sh:nextcloud
-            - title: Jellyfin
-              url: https://media.tstarr.us
-              icon: sh:jellyfin
-            - title: 2FAuth
-              url: https://2fa.tstarr.us
-              icon: sh:2fauth
-            - title: LC Mattermost
-              url: https://lc.tstarr.us
-              icon: sh:mattermost
-            - title: Remmina  
-              url: https://rdp.tstarr.us
-              icon: sh:remmina
-            - title: RSSBridge 
-              url: http://rss-bridge.vortex-1.lan
-              icon: sh:rss-bridge
-            - title: Miniflux 
-              url: http://rss.tstarr.us
-              icon: sh:miniflux
+        - type: custom-api
+          title: Linkding Bookmarks
+          url: https://link.tstarr.us/api/bookmarks?bundle=1
+          headers:
+            Authorization: "Token b06564fb079865a567c31830cb81eb3028d47826"
+          cache: 30m
+          template: |
+            <ul class="space-y-2">
+            {{ range .JSON.Array "results" }}
+              <li>
+                <a href="{{ .String "url" }}" target="_blank" class="hover:underline">
+                  {{ .String "title" }}
+                </a>
+              </li>
+            {{ end }}
+            </ul>
+
+    - size: small
+      widgets:
+

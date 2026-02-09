@@ -1,0 +1,22 @@
+- &linkding
+  type: custom-api
+  title: Title 
+  url: https://link.tstarr.us/api/bookmarks?bundle=1
+  headers:
+    Authorization: "Token ${LINKDING_TOKEN}"
+  cache: 10m
+  template: |
+    <ul class="space-y-2">
+      {{ range .JSON.Array "results" }}
+        <li>
+          <a href="{{ .String "url" }}" target="_blank" class="hover:underline">
+            <p>
+              <strong>
+                <span style="color: #d5d5da;">{{ .String "title" }}</span>
+                <span style="color: #d9c28d;">↗</span>
+              </strong>
+            </p>
+          </a>
+        </li>
+      {{ end }}
+    </ul>

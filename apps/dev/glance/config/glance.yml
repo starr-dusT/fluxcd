@@ -4,9 +4,10 @@ auth:
     tstarr:
       password: ${GLANCE_PASSWORD}
 
-theme:
-  custom-css-file: /assets/user.css
+custom-widgets:
+  - $include: linkding.yml
 
 pages:
   - $include: home.yml
   - $include: lab.yml
+

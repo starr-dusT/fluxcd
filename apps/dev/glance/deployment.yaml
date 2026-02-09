@@ -33,6 +33,11 @@ spec:
                 secretKeyRef:
                   name: sops-apps-dev
                   key: GLANCE_PASSWORD
+            - name: LINKDING_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: LINKDING_TOKEN
       volumes:
         - name: glance-config-volume
           configMap:

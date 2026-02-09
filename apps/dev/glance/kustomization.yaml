@@ -10,3 +10,5 @@ configMapGenerator:
     - config/glance.yml
     - config/home.yml
     - config/lab.yml
+    - config/linkding.yml
+    - config/sports.yml
