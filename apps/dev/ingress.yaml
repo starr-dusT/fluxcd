@@ -60,7 +60,7 @@ spec:
         - name: mattermost-service
           port: 80
 
-    - match: Host(`rss-bridge.vortex-1.lan`)
+    - match: Host(`rssbridge.vortex-1.lan`) || Host(`rssbridge.tstarr.us`)
       kind: Rule
       services:
         - name: rss-bridge-service
