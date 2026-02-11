@@ -10,4 +10,4 @@ custom-widgets:
 pages:
   - $include: home.yml
   - $include: lab.yml
-
+  - $include: work.yml

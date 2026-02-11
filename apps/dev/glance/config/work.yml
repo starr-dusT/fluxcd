@@ -1,0 +1,11 @@
+- name: Work
+  width: default 
+  columns:
+    - size: full
+      widgets:
+        - type: split-column
+          max-columns: 2 
+          widgets: 
+            - <<: *linkding
+              title: Bookmarks 
+              url: https://link.tstarr.us/api/bookmarks?bundle=10&sort=title_asc

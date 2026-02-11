@@ -1,34 +1,54 @@
 - name: Lab 
   width: default 
-  center-vertically: true
   columns:
-    - size: small
-      widgets:
-        - type: clock
-          hour-format: 24h
-          timezones:
-            - timezone: Asia/Shanghai
-              label: Beijing
-            - timezone: Europe/Moscow
-              label: Moscow
-            - timezone: Asia/Tehran
-              label: Tehran
-        - type: weather
-          units: imperial 
-          hour-format: 24h
-          location: Tehachapi, United States
-        
     - size: full
       widgets:
-        - type: bookmarks
-          groups:
-            - title: Homelab 
-              links:
-                - title: Cloudflare Dashboard
-                  url: https://dash.cloudflare.com/
+        - type: split-column
+          max-columns: 2 
+          widgets: 
+            - <<: *linkding
+              title: Internal 
+              url: https://link.tstarr.us/api/bookmarks?bundle=5&sort=title_asc
+            - <<: *linkding
+              title: Resources 
+              url: https://link.tstarr.us/api/bookmarks?bundle=7&sort=title_asc
         - type: monitor
           cache: 10m
           title: Services
+          sites:
+            - title: Home Assistant
+              url: https://home.tstarr.us
+              icon: sh:home-assistant
+            - title: Gitea
+              url: https://git.tstarr.us
+              icon: sh:gitea
+            - title: Linkding
+              url: https://link.tstarr.us
+              icon: sh:linkding
+            - title: Nextcloud
+              url: https://cloud.tstarr.us
+              icon: sh:nextcloud
+            - title: Jellyfin
+              url: https://media.tstarr.us
+              icon: sh:jellyfin
+            - title: 2FAuth
+              url: https://2fa.tstarr.us
+              icon: sh:2fauth
+            - title: LC Mattermost
+              url: https://lc.tstarr.us
+              icon: sh:mattermost
+            - title: Remmina  
+              url: https://rdp.tstarr.us
+              icon: sh:remmina
+            - title: RSSBridge 
+              url: http://rssbridge.vortex-1.lan
+              icon: sh:rss-bridge
+            - title: Miniflux 
+              url: http://rss.tstarr.us
+              icon: sh:miniflux
+        - type: monitor
+          cache: 10m
+          title: Infrastructure 
           sites:
             - title: Adguard 
               url: http://tetragon.lan:3003
@@ -50,23 +70,46 @@
               icon: sh:visual-studio-code
               alt-status-codes:
                 - 403
-        - type: custom-api
-          title: Linkding Bookmarks
-          url: https://link.tstarr.us/api/bookmarks?bundle=1
-          headers:
-            Authorization: "Token b06564fb079865a567c31830cb81eb3028d47826"
-          cache: 30m
-          template: |
-            <ul class="space-y-2">
-            {{ range .JSON.Array "results" }}
-              <li>
-                <a href="{{ .String "url" }}" target="_blank" class="hover:underline">
-                  {{ .String "title" }}
-                </a>
-              </li>
-            {{ end }}
-            </ul>
 
     - size: small
       widgets:
-
+        - type: custom-api
+          title: Machines Up
+          cache: 5m
+          url: ${GRAFANA_URL}/api/ds/query
+          method: POST
+          headers:
+            Authorization: Bearer ${GRAFANA_TOKEN}
+            Accept: application/json
+          body-type: json
+          body:
+            queries:
+              - datasource:
+                  type: prometheus
+                  uid: cf7tp9ngpdgxsb
+                expr: group(up) by (job)
+                legendFormat: '{{job}}'
+                refId: A
+                range: true
+                instant: false
+                intervalMs: 60000
+                maxDataPoints: 5
+            from: now-5m
+            to: now
+          template: |
+            <ul class="list list-gap-14 collapsible-container" data-collapse-after="5">
+              {{ range .JSON.Array "results.A.frames" }}
+                <li>
+                  <span style="color: #d9c28d;">{{ .String "schema.fields.1.config.displayNameFromDS" }}</span>
+                </li>
+              {{ end }}
+            </ul>
+        - type: dns-stats
+          service: adguard
+          url: http://69.69.1.10:3003/
+        - type: releases
+          show-source-icon: true
+          repositories:
+            - go-gitea/gitea
+            - jellyfin/jellyfin
+            - glanceapp/glance

@@ -1,7 +1,7 @@
 - &linkding
   type: custom-api
   title: Title 
-  url: https://link.tstarr.us/api/bookmarks?bundle=1
+  url: https://link.tstarr.us/api/bookmarks?bundle=1&sort=title_asc
   headers:
     Authorization: "Token ${LINKDING_TOKEN}"
   cache: 10m

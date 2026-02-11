@@ -33,6 +33,13 @@ spec:
                 secretKeyRef:
                   name: sops-apps-dev
                   key: GLANCE_PASSWORD
+            - name: GRAFANA_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: GRAFANA_TOKEN 
+            - name: GRAFANA_URL 
+              value: "http://69.69.1.10:2342"
             - name: LINKDING_TOKEN
               valueFrom:
                 secretKeyRef:

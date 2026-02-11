@@ -12,3 +12,4 @@ configMapGenerator:
     - config/lab.yml
     - config/linkding.yml
     - config/sports.yml
+    - config/work.yml

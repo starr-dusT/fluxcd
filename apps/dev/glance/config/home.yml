@@ -1,6 +1,5 @@
 - name: Home 
   width: default 
-  center-vertically: true
   columns:
     - size: small
       widgets:
@@ -13,6 +12,8 @@
               label: Moscow
             - timezone: Asia/Tehran
               label: Tehran
+        - type: calendar
+          first-day-of-week: monday
         - type: weather
           units: imperial 
           hour-format: 24h
@@ -20,47 +21,24 @@
         
     - size: full
       widgets:
+        - type: search
+          search-engine: google
+          new-tab: true
         - type: split-column
           max-columns: 2 
           widgets: 
             - <<: *linkding
               title: Daily
-              url: https://link.tstarr.us/api/bookmarks?bundle=3
-
-        - type: monitor
-          cache: 10m
-          title: Services
-          sites:
-            - title: Home Assistant
-              url: https://home.tstarr.us
-              icon: sh:home-assistant
-            - title: Gitea
-              url: https://git.tstarr.us
-              icon: sh:gitea
-            - title: Linkding
-              url: https://link.tstarr.us
-              icon: sh:linkding
-            - title: Nextcloud
-              url: https://cloud.tstarr.us
-              icon: sh:nextcloud
-            - title: Jellyfin
-              url: https://media.tstarr.us
-              icon: sh:jellyfin
-            - title: 2FAuth
-              url: https://2fa.tstarr.us
-              icon: sh:2fauth
-            - title: LC Mattermost
-              url: https://lc.tstarr.us
-              icon: sh:mattermost
-            - title: Remmina  
-              url: https://rdp.tstarr.us
-              icon: sh:remmina
-            - title: RSSBridge 
-              url: http://rss-bridge.vortex-1.lan
-              icon: sh:rss-bridge
-            - title: Miniflux 
-              url: http://rss.tstarr.us
-              icon: sh:miniflux
+              url: https://link.tstarr.us/api/bookmarks?bundle=3&sort=title_asc
+            - <<: *linkding
+              title: Media 
+              url: https://link.tstarr.us/api/bookmarks?bundle=6&sort=title_asc
+            - <<: *linkding
+              title: Social 
+              url: https://link.tstarr.us/api/bookmarks?bundle=8&sort=title_asc
+            - <<: *linkding
+              title: Shop 
+              url: https://link.tstarr.us/api/bookmarks?bundle=9&sort=title_asc
 
     - size: small
       widgets:
