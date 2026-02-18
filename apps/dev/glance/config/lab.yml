@@ -75,7 +75,7 @@
       widgets:
         - type: custom-api
           title: Machines Up
-          cache: 5m
+          cache: 30s 
           url: ${GRAFANA_URL}/api/ds/query
           method: POST
           headers:
@@ -87,7 +87,7 @@
               - datasource:
                   type: prometheus
                   uid: cf7tp9ngpdgxsb
-                expr: group(up) by (job)
+                expr: group by(job) (node_memory_Active_bytes)
                 legendFormat: '{{job}}'
                 refId: A
                 range: true
