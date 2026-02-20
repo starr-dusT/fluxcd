@@ -120,7 +120,6 @@
                     <span style="color: #e06c75;">
                       {{ .String "labels.rulename" }}
                     </span>
-                    {{ end }}
                   </li>
                 {{ end }}
               {{ end }}
@@ -131,6 +130,18 @@
         - type: releases
           show-source-icon: true
           repositories:
-            - go-gitea/gitea
-            - jellyfin/jellyfin
             - glanceapp/glance
+            - go-gitea/gitea
+            - home-assistant/operating-system
+            - jellyfin/jellyfin
+            - sissbruecker/linkding
+            - nextcloud/all-in-one
+            - jellyfin/jellyfin
+            - Bubka/2FAuth
+            - mattermost/mattermost
+            - RSS-Bridge/rss-bridge
+            - miniflux/v2
+            - AdguardTeam/AdGuardHome
+            - grafana/grafana
+            - databasus/databasus
+            - coder/code-server
