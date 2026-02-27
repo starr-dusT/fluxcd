@@ -1,0 +1,98 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tandoor-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tandoor-db
+  template:
+    metadata:
+      labels:
+        app: tandoor-db
+    spec:
+      containers:
+        - image: postgres:18
+          name: tandoor-db
+          ports:
+            - containerPort: 5432 
+              protocol: TCP
+          volumeMounts:
+            - name: tandoor-db-volume
+              mountPath: /var/lib/postgresql
+          env:
+            - name: POSTGRES_USER
+              value: "tandoor"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: TD_POSTGRES_PASSWORD 
+            - name: POSTGRES_DB
+              value: "tandoor"
+      volumes:
+        - name: tandoor-db-volume
+          persistentVolumeClaim:
+            claimName: tandoor-db-pvc
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tandoor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tandoor
+  template:
+    metadata:
+      labels:
+        app: tandoor
+    spec:
+      containers:
+        - image: vabene1111/recipes:latest
+          name: tandoor
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          env:
+            - name: TZ
+              value: "America/Los_Angeles" 
+            - name: DB_ENGINE
+              value: "django.db.backends.postgresql"
+            - name: POSTGRES_HOST
+              value: "tandoor-db-service"
+            - name: POSTGRES_DB
+              value: "tandoor" 
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_USER 
+              value: "tandoor" 
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: TD_POSTGRES_PASSWORD
+            - name: SECRET_KEY 
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: TD_SECRET_KEY
+      volumes:
+        - name: tandoor-volume
+          persistentVolumeClaim:
+            claimName: tandoor-pvc
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%

@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tandoor-db-service
+spec:
+  selector:
+    app: tandoor-db
+  ports:
+    - name: tandoor-db
+      port: 5432 
+      targetPort: 5432
+      nodePort: 30436
+  type: NodePort 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tandoor-service
+spec:
+  selector:
+    app: tandoor
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP

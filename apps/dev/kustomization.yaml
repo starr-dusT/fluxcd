@@ -13,6 +13,7 @@ resources:
   - ./nextcloud
   - ./remmina
   - ./rss-bridge
+  - ./tandoor
   - ./twof-auth
   - ingress.yaml
   - secrets.yaml
