@@ -37,7 +37,7 @@
             - title: LC Mattermost
               url: https://lc.tstarr.us
               icon: sh:mattermost
-            - title: Remmina  
+            - title: Comet RDP 
               url: https://rdp.tstarr.us
               icon: sh:remmina
             - title: RSSBridge 
@@ -65,11 +65,6 @@
               check-url: https://glance.tstarr.us
               allow-insecure: true
               icon: sh:databasus
-            - title: Code Server
-              url: https://code.tstarr.us
-              icon: sh:visual-studio-code
-              alt-status-codes:
-                - 403
 
     - size: small
       widgets:
