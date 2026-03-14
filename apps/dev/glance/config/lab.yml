@@ -12,6 +12,9 @@
             - <<: *linkding
               title: Resources 
               url: https://link.tstarr.us/api/bookmarks?bundle=7&sort=title_asc
+            - <<: *linkding
+              title: Arrs 
+              url: https://link.tstarr.us/api/bookmarks?bundle=11&sort=title_asc
         - type: monitor
           cache: 10m
           title: Services
