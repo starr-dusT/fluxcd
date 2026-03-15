@@ -33,7 +33,7 @@ spec:
             - name: POSTGRES_DB
               value: "tandoor"
             - name: CSRF_TRUSTED_ORIGINS
-              value: "tandoor.tstarr.us"
+              value: "https://tandoor.tstarr.us"
       volumes:
         - name: tandoor-db-volume
           persistentVolumeClaim:
@@ -78,6 +78,16 @@ spec:
               value: "5432"
             - name: POSTGRES_USER 
               value: "tandoor" 
+            - name: ALLOWED_HOSTS
+              value: "tandoor.tstarr.us"
+            - name: CSRF_TRUSTED_ORIGINS
+              value: "https://tandoor.tstarr.us"
+            - name: SECURE_PROXY_SSL_HEADER
+              value: HTTP_X_FORWARDED_PROTO,https
+            - name: USE_X_FORWARDED_HOST
+              value: "True"
+            - name: SECURE_SSL_REDIRECT
+              value: "True"
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:

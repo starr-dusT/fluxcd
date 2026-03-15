@@ -19,6 +19,18 @@ spec:
         - name: linkding-service
           port: 80
 
+    - match: Host(`rdp.vortex-1.lan`) || Host(`rdp.tstarr.us`)
+      kind: Rule
+      services:
+        - name: remmina-service
+          port: 80
+
+    - match: Host(`code.vortex-1.lan`) || Host(`code.tstarr.us`)
+      kind: Rule
+      services:
+        - name: code-server-service
+          port: 80
+
     - match: Host(`media.vortex-1.lan`) || Host(`media.tstarr.us`)
       kind: Rule
       services:
@@ -66,3 +78,16 @@ spec:
       services:
         - name: tandoor-service 
           port: 80
+      middlewares:
+        - name: tandoor-headers
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: tandoor-headers
+spec:
+  headers:
+    customRequestHeaders:
+      X-Forwarded-Proto: "https"
+    sslProxyHeaders:
+      X-Forwarded-Proto: "https"
