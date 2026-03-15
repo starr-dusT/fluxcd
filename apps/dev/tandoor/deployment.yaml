@@ -68,8 +68,6 @@ spec:
           env:
             - name: TZ
               value: "America/Los_Angeles" 
-            - name: ALLOWED_HOSTS 
-              value: "tandoor.tstarr.us"
             - name: DB_ENGINE
               value: "django.db.backends.postgresql"
             - name: POSTGRES_HOST
