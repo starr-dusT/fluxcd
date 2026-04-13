@@ -39,6 +39,9 @@
             - <<: *linkding
               title: Shop 
               url: https://link.tstarr.us/api/bookmarks?bundle=9&sort=title_asc
+            - <<: *linkding
+              title: Read Later 
+              url: https://link.tstarr.us/api/bookmarks?bundle=12&sort=title_asc
 
     - size: small
       widgets:
