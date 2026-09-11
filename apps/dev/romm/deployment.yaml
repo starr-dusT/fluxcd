@@ -63,7 +63,7 @@ spec:
         - image: rommapp/romm:latest
           name: romm
           ports:
-            - containerPort: 80
+            - containerPort: 8080
               protocol: TCP
           volumeMounts:
             - name: romm-library-volume
@@ -75,8 +75,12 @@ spec:
             - name: romm-config-volume
               mountPath: /romm/config
           env:
+            - name: ROMM_DB_DRIVER
+              value: "postgresql"
+            - name: DB_PORT
+              value: "5432"
             - name: DB_HOST 
-              value: "romm-db"
+              value: "romm-db-service"
             - name: DB_NAME
               value: "romm"
             - name: DB_USER
@@ -92,16 +96,19 @@ spec:
                   name: sops-apps-dev
                   key: ROMM_AUTH_SECRET_KEY
             - name: IGDB_CLIENT_ID
+              valueFrom:
                 secretKeyRef:
                   name: sops-apps-dev
                   key: ROMM_IGDB_CLIENT_ID
             - name: IGDB_CLIENT_SECRET
+              valueFrom:
                 secretKeyRef:
                   name: sops-apps-dev
                   key: ROMM_IGDB_CLIENT_SECRET
             - name: PLAYMATCH_API_ENABLED
               value: "true"
             - name: RETROACHIEVEMENTS_API_KEY
+              valueFrom:
                 secretKeyRef:
                   name: sops-apps-dev
                   key: ROMM_RETROA_SECRET

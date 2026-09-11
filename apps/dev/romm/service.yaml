@@ -2,6 +2,20 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: romm-db-service
+spec:
+  selector:
+    app: romm-db
+  ports:
+    - name: romm-db
+      port: 5432 
+      targetPort: 5432
+      nodePort: 30439
+  type: NodePort 
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: romm-service
 spec:
   selector:
@@ -9,5 +23,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80 
+      targetPort: 8080
   type: ClusterIP
