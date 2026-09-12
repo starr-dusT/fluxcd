@@ -14,6 +14,20 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
+  name: romm-smb-library-pvc
+  namespace: romm
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: romm-smb-library-pv
+  storageClassName: smb
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
   name: romm-smb-assets-pvc
   namespace: romm
 spec:

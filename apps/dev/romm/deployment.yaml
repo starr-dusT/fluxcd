@@ -66,6 +66,8 @@ spec:
             - containerPort: 8080
               protocol: TCP
           volumeMounts:
+            - name: romm-library-volume
+              mountPath: /romm/library
             - name: romm-assets-volume
               mountPath: /romm/assets
             - name: romm-resources-volume
@@ -113,6 +115,9 @@ spec:
           securityContext:
             privileged: true
       volumes:
+        - name: romm-library-volume
+          persistentVolumeClaim:
+            claimName: romm-smb-library-pvc
         - name: romm-assets-volume
           persistentVolumeClaim:
             claimName: romm-smb-assets-pvc
