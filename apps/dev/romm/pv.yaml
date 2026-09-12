@@ -19,7 +19,7 @@ spec:
     readOnly: false 
     # volumeHandle format: {smb-server-address}#{sub-dir-name}#{share-name}
     # make sure this value is unique for every share in the cluster
-    volumeHandle: romm
+    volumeHandle: romm-library
     volumeAttributes:
       source: "//69.69.1.14/romm_library" # Change this to your SMB IP and share name
     nodeStageSecretRef:
@@ -47,7 +47,7 @@ spec:
     readOnly: false 
     # volumeHandle format: {smb-server-address}#{sub-dir-name}#{share-name}
     # make sure this value is unique for every share in the cluster
-    volumeHandle: romm
+    volumeHandle: romm-assets
     volumeAttributes:
       source: "//69.69.1.14/romm_assets" # Change this to your SMB IP and share name
     nodeStageSecretRef:
