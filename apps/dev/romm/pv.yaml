@@ -21,7 +21,7 @@ spec:
     # make sure this value is unique for every share in the cluster
     volumeHandle: romm
     volumeAttributes:
-      source: "//69.69.1.14/romm_libary" # Change this to your SMB IP and share name
+      source: "//69.69.1.14/romm_library" # Change this to your SMB IP and share name
     nodeStageSecretRef:
       name: smbcreds
       namespace: default
