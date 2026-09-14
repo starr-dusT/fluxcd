@@ -1,0 +1,134 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: romm-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: romm-db
+  template:
+    metadata:
+      labels:
+        app: romm-db
+    spec:
+      containers:
+        - image: postgres:16
+          name: romm-db
+          ports:
+            - containerPort: 5432 
+              protocol: TCP
+          volumeMounts:
+            - name: romm-db-volume
+              mountPath: /var/lib/postgresql
+          env:
+            - name: POSTGRES_DB
+              value: "romm"
+            - name: POSTGRES_USER
+              value: "romm-user"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: ROMM_DB_PASSWORD
+      volumes:
+        - name: romm-db-volume
+          persistentVolumeClaim:
+            claimName: romm-db-pvc
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: romm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: romm
+  template:
+    metadata:
+      labels:
+        app: romm
+    spec:
+      securityContext:
+        fsGroup: 104
+      containers:
+        - image: rommapp/romm:latest
+          name: romm
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: romm-library-volume
+              mountPath: /romm/library
+            - name: romm-assets-volume
+              mountPath: /romm/assets
+            - name: romm-resources-volume
+              mountPath: /romm/resources
+            - name: romm-config-volume
+              mountPath: /romm/config
+          env:
+            - name: ROMM_DB_DRIVER
+              value: "postgresql"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_HOST 
+              value: "romm-db-service"
+            - name: DB_NAME
+              value: "romm"
+            - name: DB_USER
+              value: "romm-user"
+            - name: DB_PASSWD
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: ROMM_DB_PASSWORD
+            - name: ROMM_AUTH_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: ROMM_AUTH_SECRET_KEY
+            - name: IGDB_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: ROMM_IGDB_CLIENT_ID
+            - name: IGDB_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: ROMM_IGDB_CLIENT_SECRET
+            - name: PLAYMATCH_API_ENABLED
+              value: "true"
+            - name: RETROACHIEVEMENTS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sops-apps-dev
+                  key: ROMM_RETROA_SECRET
+          securityContext:
+            privileged: true
+      volumes:
+        - name: romm-library-volume
+          persistentVolumeClaim:
+            claimName: romm-smb-library-pvc
+        - name: romm-assets-volume
+          persistentVolumeClaim:
+            claimName: romm-smb-assets-pvc
+        - name: romm-resources-volume
+          persistentVolumeClaim:
+            claimName: romm-resources-pvc
+        - name: romm-config-volume
+          persistentVolumeClaim:
+            claimName: romm-config-pvc
+      restartPolicy: Always
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
