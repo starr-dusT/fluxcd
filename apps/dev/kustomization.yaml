@@ -10,7 +10,6 @@ resources:
   - ./mattermost
   - ./miniflux
   - ./nextcloud
-  - ./romm
   - ./rss-bridge
   - ./tandoor
   - ./twof-auth

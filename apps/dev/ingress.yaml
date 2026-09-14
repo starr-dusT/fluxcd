@@ -80,12 +80,6 @@ spec:
           port: 80
       middlewares:
         - name: tandoor-headers
-
-    - match: Host(`romm.vortex-1.lan`) || Host(`romm.tstarr.us`)
-      kind: Rule
-      services:
-        - name: romm-service 
-          port: 80
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
