@@ -14,6 +14,9 @@ spec:
   mountOptions:
     - dir_mode=0777
     - file_mode=0777
+    - mfsymlinks
+    - cache=strict
+    - noserverino
   csi:
     driver: smb.csi.k8s.io
     readOnly: false 
@@ -42,6 +45,9 @@ spec:
   mountOptions:
     - dir_mode=0777
     - file_mode=0777
+    - mfsymlinks
+    - cache=strict
+    - noserverino
   csi:
     driver: smb.csi.k8s.io
     readOnly: false 
