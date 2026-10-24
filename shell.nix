@@ -13,4 +13,3 @@ pkgs.mkShell {
     echo "SOPS_AGE_KEY_FILE set to: $SOPS_AGE_KEY_FILE"
   '';
 }
-
