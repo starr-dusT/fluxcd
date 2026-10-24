@@ -14,7 +14,7 @@ spec:
         app: gitea
     spec:
       containers:
-        - image: docker.gitea.com/gitea:latest
+        - image: docker.gitea.com/gitea:28.2
           name: gitea
           ports:
             - containerPort: 3000 
