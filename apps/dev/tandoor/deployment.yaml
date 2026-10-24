@@ -57,7 +57,7 @@ spec:
         app: tandoor
     spec:
       containers:
-        - image: vabene1111/recipes:latest
+        - image: vabene1111/recipes:2.7.1
           name: tandoor
           ports:
             - containerPort: 80
