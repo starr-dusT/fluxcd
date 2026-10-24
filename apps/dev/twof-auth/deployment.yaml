@@ -14,7 +14,7 @@ spec:
         app: twof-auth
     spec:
       containers:
-        - image: 2fauth/2fauth:latest
+        - image: 2fauth/2fauth:8.0.3
           name: twof-auth
           ports:
             - containerPort: 8000 
