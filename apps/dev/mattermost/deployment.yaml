@@ -57,7 +57,7 @@ spec:
         app: mattermost
     spec:
       containers:
-        - image: mattermost/mattermost-team-edition:10.4.2
+        - image: mattermost/mattermost-team-edition:10.11.25
           name: mattermost
           ports:
             - containerPort: 8065
