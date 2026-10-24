@@ -15,7 +15,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: borg 
-              image: pschiffe/borg:latest
+              image: pschiffe/borg@sha256:aded85fe2222d9a5f91c1c6391c17b6595429b2b9ca2eba74c002af12ee08676
               env:
                 - name: TZ
                   value: "America/Los_Angeles"
