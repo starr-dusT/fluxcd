@@ -4,8 +4,8 @@ kind: CronJob
 metadata:
   name: rsync-backup
 spec:
-  # Every day at 0200
-  schedule: "0 2 * * *"
+  # Every day at 0400
+  schedule: "0 4 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
