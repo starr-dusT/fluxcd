@@ -14,7 +14,7 @@ spec:
         app: cloudflare-ddns
     spec:
       containers:
-        - image: favonia/cloudflare-ddns:latest
+        - image: favonia/cloudflare-ddns:1.18.0
           name: cloudflare-ddns
           env:
             - name: IP6_PROVIDER
