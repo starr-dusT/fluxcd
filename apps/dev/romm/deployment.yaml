@@ -60,7 +60,7 @@ spec:
       securityContext:
         fsGroup: 104
       containers:
-        - image: rommapp/romm:latest
+        - image: rommapp/romm:5.4.1
           name: romm
           ports:
             - containerPort: 8080
