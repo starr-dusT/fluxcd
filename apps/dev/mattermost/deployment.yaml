@@ -40,10 +40,7 @@ spec:
             claimName: mattermost-db-pvc
       restartPolicy: Always
     strategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxUnavailable: 25%
-        maxSurge: 25%
+      type: Recreate
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -98,7 +95,4 @@ spec:
             claimName: mattermost-logs-pvc
       restartPolicy: Always
     strategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxUnavailable: 25%
-        maxSurge: 25%
+      type: Recreate

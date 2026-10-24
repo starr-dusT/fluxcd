@@ -38,10 +38,7 @@ spec:
             claimName: romm-db-pvc
       restartPolicy: Always
     strategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxUnavailable: 25%
-        maxSurge: 25%
+      type: Recreate
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -128,7 +125,5 @@ spec:
           persistentVolumeClaim:
             claimName: romm-config-pvc
       restartPolicy: Always
-    strategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxUnavailable: 25%
+      strategy:
+        type: Recreate

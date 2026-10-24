@@ -49,7 +49,5 @@ spec:
           hostPath:
             path: /dev/dri
       restartPolicy: Always
-    strategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxUnavailable: 25%
+      strategy:
+        type: Recreate

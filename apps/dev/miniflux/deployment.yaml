@@ -38,10 +38,7 @@ spec:
             claimName: miniflux-db-pvc
       restartPolicy: Always
     strategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxUnavailable: 25%
-        maxSurge: 25%
+      type: Recreate
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -88,7 +85,4 @@ spec:
               value: postgres://miniflux:$(POSTGRES_PASSWORD)@miniflux-db-service:5432/miniflux?sslmode=disable
       restartPolicy: Always
     strategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxUnavailable: 25%
-        maxSurge: 25%
+      type: Recreate

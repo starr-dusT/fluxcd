@@ -37,7 +37,5 @@ spec:
           persistentVolumeClaim:
             claimName: homedb-pvc
       restartPolicy: Always
-    strategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxUnavailable: 25%
+      strategy:
+        type: Recreate
