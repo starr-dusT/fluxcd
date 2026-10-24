@@ -55,7 +55,7 @@ spec:
         app: miniflux
     spec:
       containers:
-        - image: miniflux/miniflux:latest
+        - image: miniflux/miniflux:2.3.4
           name: miniflux
           ports:
             - containerPort: 8080
