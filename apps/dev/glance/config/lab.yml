@@ -34,15 +34,21 @@
             - title: Jellyfin
               url: https://media.tstarr.us
               icon: sh:jellyfin
+            - title: RomM
+              url: https://romm.tstarr.us
+              icon: sh:romm
             - title: 2FAuth
               url: https://2fa.tstarr.us
               icon: sh:2fauth
+            - title: Tandoor
+              url: https://tandoor.tstarr.us
+              icon: sh:tandoor-recipes
             - title: LC Mattermost
               url: https://lc.tstarr.us
               icon: sh:mattermost
-            - title: Comet RDP 
+            - title: Guacamole
               url: https://rdp.tstarr.us
-              icon: sh:remmina
+              icon: sh:apache-guacamole
             - title: RSSBridge 
               url: http://rssbridge.vortex-1.lan
               icon: sh:rss-bridge
@@ -68,6 +74,31 @@
               check-url: https://glance.tstarr.us
               allow-insecure: true
               icon: sh:databasus
+            - title: qBittorrent 
+              url: http://torus.lan:8089
+              check-url: https://glance.tstarr.us
+              allow-insecure: true
+              icon: sh:qbittorrent
+            - title: NZBGet 
+              url: http://torus.lan:6789
+              check-url: https://glance.tstarr.us
+              allow-insecure: true
+              icon: sh:nzbget
+            - title: Prowlarr
+              url: http://torus.lan:9696
+              check-url: https://glance.tstarr.us
+              allow-insecure: true
+              icon: sh:prowlarr
+            - title: Sonarr
+              url: http://torus.lan:8989
+              check-url: https://glance.tstarr.us
+              allow-insecure: true
+              icon: sh:sonarr
+            - title: Radarr
+              url: http://torus.lan:7878
+              check-url: https://glance.tstarr.us
+              allow-insecure: true
+              icon: sh:radarr
 
     - size: small
       widgets:
@@ -143,3 +174,10 @@
             - grafana/grafana
             - databasus/databasus
             - coder/code-server
+            - apache/guacamole-server
+            - TandoorRecipes/recipes
+            - qbittorrent/qbittorrent
+            - nzbgetcom/nzbget
+            - prowlarr/prowlarr
+            - sonarr/sonarr
+            - radarr/radarr
